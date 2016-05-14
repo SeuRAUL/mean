@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Hello World</title>
+</head>
+  <body ng-app="MeuModulo" ng-controller="MeuController">
+
+    <input type="text" ng-model="entrada" placeholder="É hora do show, porra!">
+    <h1>{{entrada}}</h1>
+    <br>
+    <h2>{{titulo}}</h2>
+    <input type="text" ng-model="filtro" placeholder="filtro">
+
+    <ul>
+      <li ng-repeat='vingador in vingadores' ng-show='vingador.visivel'>
+        {{vingador.nome}}
+        <button ng-click="changeVisivel(vingador)">x</button>
+      </li>
+    </ul>
+    <br>
+
+    <input type="text" ng-model="vingador.nome" placeholder="Novo integrante">
+    <button ng-click="addVingador(vingador)">Adicionar</button>
+
+
+    <script src="bower_components/angular/angular.min.js" type="text/javascript" charset="utf-8"></script>
+
+    <script type="text/javascript">
+      angular.module('MeuModulo', []);
+      angular.module('MeuModulo').controller('MeuController', function($scope){
+        $scope.titulo = "Hurricane Truck";
+        
+        $scope.vingadores = [
+          {nome: 'Fofão'            , visivel: true},
+          {nome: 'Capitão América'  , visivel: true},
+          {nome: 'Popay'            , visivel: true},
+          {nome: 'Ben10'            , visivel: true},
+          {nome: 'Homem Aranha'     , visivel: true},
+          {nome: 'Batman'           , visivel: false},
+          {nome: 'Mickey'           , visivel: true}
+        ];
+
+        $scope.addVingador = function(vingador) {
+          vingador.visivel=true;
+          console.log(vingador)
+          $scope.vingadores.push(angular.copy(vingador));
+        }
+
+        $scope.changeVisivel = function(vingador) {
+          vingador.visivel = vingador.visivel ? false : true
+          console.log(vingador)
+        }
+      }
+
+      );
+
+    angular.module('MeuModulo', ['ngRoute']).config(function($routeProvider){
+      $routeProvider.when('/', {
+        controller: 'MeuController',
+        // template: 'html aqui...'
+      });
+    });
+  </script>
+  </body>
+</html>
